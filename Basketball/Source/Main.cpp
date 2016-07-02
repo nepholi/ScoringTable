@@ -11,9 +11,7 @@
 #include <JuceHeader.h>
 #include "Main.h"
 #include <Common/arduino_manager.h>
-#include <Common/PC2Arduino/Serial.h>
 #include <Common/clock_controller.h>
-#include <Common/PC2Arduino/PC2Arduino.h>
 #include <Common/ScoreRecord.h>
 
 using namespace waa;
@@ -37,6 +35,8 @@ void BasketballApplication::initialise(const String& commandLine)
 
 	InitializeArduinoManager();
 	InitializeGameClock(mainWindow->GetMainComponent());
+	adm_ = std::make_unique < ArduinoManager >();
+	
 	waa::OpenCom();
 	waa::TimeStampInitial();
 }
@@ -82,7 +82,8 @@ void BasketballApplication::RegisterHomeScoreIncreaseButton(MainContentComponent
 		auto home_score = mcc.GetHomeScore();
 		home_score++;
 		
-		waa::PC2Arduino("IncA");
+		//adm_->SendCommandToArduino(aHomeScoreIncrease);
+		//waa::PC2Arduino("IncA");
 		MessageManager::callAsync([home_score, &mcc]()
 		{
 			mcc.SetHomeScore(home_score);
@@ -96,15 +97,18 @@ void BasketballApplication::RegisterHomeScoreIncreaseButton(MainContentComponent
 
 void BasketballApplication::RegisterHomeScoreDecreaseButton(MainContentComponent& mcc)
 {
+	
 	mcc.RegisterMainWindowCallbacks(kHomeScoreDecreaseButton,
-									[&mcc]()
+									[&mcc,this]()
 	{
+
 		Logger::outputDebugString("callback arrive here");
 		auto home_score = mcc.GetHomeScore();
 
 		if (home_score == 0)
 			return false;
 		home_score--;
+		
 		
 		waa::PC2Arduino("DecA");
 		MessageManager::callAsync([home_score, &mcc]()

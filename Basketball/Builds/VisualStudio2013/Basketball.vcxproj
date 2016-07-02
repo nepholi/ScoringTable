@@ -43,7 +43,7 @@
     <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\pow\Workspace\ScoringTable;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\Betty\Documents\ScoringTable.git\trunk;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>

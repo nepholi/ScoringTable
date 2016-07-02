@@ -37,8 +37,11 @@ bool ArduinoManager::EndArduino()
 	return true;
 }
 
-bool SendCommandToArduino(const String& cmd)
+bool SendCommandToArduino( int command)
 {
+	
+	char *temp = strdup(PCCommand[command]);
+	waa::PC2Arduino(temp);
 	return true;
 }
 

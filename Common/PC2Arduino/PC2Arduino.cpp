@@ -11,7 +11,7 @@ using namespace std;
 
 namespace waa {
 
-	tstring commPortName((_TCHAR*)"COM3");
+	tstring commPortName((_TCHAR*)"COM9");
 	//tstring commPortName((_TCHAR*)"COM4");
 	Serial serial(commPortName);
 	
@@ -30,9 +30,9 @@ namespace waa {
 	//serial.flush();
 	do {
 		i++;
-	} while (strcmp(command, PCCommand[i]) != 0 || i>14);
+	} while (strcmp(command, PCCommand[i]) != 0 || i >= DEF_ARDUINO_COMMAND_NUMBER);
 
-	if (i<15 && i >= 0)
+	if (i<DEF_ARDUINO_COMMAND_NUMBER && i >= 0)
 	{
 		//serial.write(ArduinoCommand+i);
 		serial.write(ArduinoCommand[i]);

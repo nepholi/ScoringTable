@@ -78,7 +78,7 @@ public:
 	};
 
 private:
-	ScopedPointer<MainWindow> mainWindow;
+	ScopedPointer<MainWindow> mainWindow;	
 };
 
 //==============================================================================
