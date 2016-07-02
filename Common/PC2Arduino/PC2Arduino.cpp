@@ -11,7 +11,7 @@ using namespace std;
 
 namespace waa {
 
-	tstring commPortName((_TCHAR*)"COM9");
+	tstring commPortName((_TCHAR*)"COM3");
 	//tstring commPortName((_TCHAR*)"COM4");
 	Serial serial(commPortName);
 	
