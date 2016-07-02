@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2013
+Project("{D98F1785-8DC1-F4A3-DECF-DF0171FA2CDB}") = "Basketball", "Basketball.vcxproj", "{3C3575A4-73E0-C4A9-7135-129BE2DF40DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C3575A4-73E0-C4A9-7135-129BE2DF40DA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3C3575A4-73E0-C4A9-7135-129BE2DF40DA}.Debug|Win32.Build.0 = Debug|Win32
+		{3C3575A4-73E0-C4A9-7135-129BE2DF40DA}.Release|Win32.ActiveCfg = Release|Win32
+		{3C3575A4-73E0-C4A9-7135-129BE2DF40DA}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
