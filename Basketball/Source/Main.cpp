@@ -19,6 +19,7 @@ using namespace waa;
 #define WindowButtonMinimum     1
 #define WindowButtonMaxmum      2
 #define WindowButtonClose       4
+#define ArduinoSwitch       1
 
 BasketballApplication::BasketballApplication()
 	: cc_(nullptr)
@@ -33,11 +34,11 @@ void BasketballApplication::initialise(const String& commandLine)
 
 	RegisterMainWindowCallbacks(mainWindow->GetMainComponent());
 
-	InitializeArduinoManager();
+	if (ArduinoSwitch)InitializeArduinoManager();
 	InitializeGameClock(mainWindow->GetMainComponent());
-	adm_ = std::make_unique < ArduinoManager >();
+	//adm_ = std::make_unique < ArduinoManager >();
 	
-	waa::OpenCom();
+	//waa::OpenCom();
 	waa::TimeStampInitial();
 }
 
@@ -82,15 +83,18 @@ void BasketballApplication::RegisterHomeScoreIncreaseButton(MainContentComponent
 		auto home_score = mcc.GetHomeScore();
 		home_score++;
 		
-		//adm_->SendCommandToArduino(aHomeScoreIncrease);
+		
+		//ArduinoManager::SendCommandToArduino(aHomeScoreIncrease);
+		adm_->SendCommandToArduino(aHomeScoreIncrease);
+		
 		//waa::PC2Arduino("IncA");
 		MessageManager::callAsync([home_score, &mcc]()
 		{
 			mcc.SetHomeScore(home_score);
 			
 		});
-		int ClockTime = cc_->GetClockValue();
-		waa::time_record(DEF_TEAM_HOME, home_score, ClockTime);
+		
+		waa::time_record(DEF_TEAM_HOME, home_score, cc_->GetClockValue());
 		return true;
 	});
 }
@@ -110,7 +114,8 @@ void BasketballApplication::RegisterHomeScoreDecreaseButton(MainContentComponent
 		home_score--;
 		
 		
-		waa::PC2Arduino("DecA");
+		//if(ArduinoSwitch)waa::PC2Arduino("DecA");
+		if (ArduinoSwitch)ArduinoManager::SendCommandToArduino(aHomeScoreDecrease);
 		MessageManager::callAsync([home_score, &mcc]()
 		{
 			mcc.SetHomeScore(home_score);
@@ -122,16 +127,18 @@ void BasketballApplication::RegisterHomeScoreDecreaseButton(MainContentComponent
 void BasketballApplication::RegisterGuestScoreIncreaseButton(MainContentComponent& mcc)
 {
 	mcc.RegisterMainWindowCallbacks(kGuestScoreIncreaseButton,
-									[&mcc]()
+									[&mcc,this]()
 	{
 		Logger::outputDebugString("callback arrive here");
 		auto guest_score = mcc.GetGuestScore();
 		guest_score++;
-		waa::PC2Arduino("IncB");
+		//if (ArduinoSwitch)waa::PC2Arduino("IncB");
+		if (ArduinoSwitch)ArduinoManager::SendCommandToArduino(aGuestScoreIncrease);
 		MessageManager::callAsync([guest_score, &mcc]()
 		{
 			mcc.SetGuestScore(guest_score);
 		});
+		waa::time_record(DEF_TEAM_HOME, guest_score, cc_->GetClockValue());
 		return true;
 	});
 }
@@ -147,7 +154,9 @@ void BasketballApplication::RegisterGuestScoreDecreaseButton(MainContentComponen
 		if (guest_score == 0)
 			return false;
 		guest_score--;
-		waa::PC2Arduino("DecB");
+		//if (ArduinoSwitch)waa::PC2Arduino("DecB");
+		if (ArduinoSwitch)ArduinoManager::SendCommandToArduino(aGuestScoreDecrease);
+		
 		MessageManager::callAsync([guest_score, &mcc]()
 		{
 			mcc.SetGuestScore(guest_score);
@@ -166,7 +175,7 @@ void BasketballApplication::RegisterMainWindowCallbacks(MainContentComponent& mc
 
 bool BasketballApplication::InitializeGameClock(MainContentComponent& mcc)
 {
-	int game_clock_total_time_sec = 720;
+	int game_clock_total_time_sec = 600;
 	mcc.SetGameClock(game_clock_total_time_sec);
 
 	cc_ = std::make_unique<ClockController>(game_clock_total_time_sec,
@@ -190,12 +199,13 @@ bool BasketballApplication::InitializeArduinoManager()
 	jassert(adm_ == nullptr);
 
 	adm_ = std::make_unique<ArduinoManager>();
-	if (!adm_->SetupArduinoEnvironment())
+	if (!adm_->SetupArduinoEnvironment(ArduinoSwitch))
 		return false;
-
+	
 	if (!adm_->PingAuduino())
 		return false;
-
+	waa::ComportSet("COM9");
+	waa::ComportInit();
 	return true;
 }
 

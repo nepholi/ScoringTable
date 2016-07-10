@@ -11,6 +11,7 @@ namespace waa {
 		"faulA", "faulB", "period", "left", "right", "IncA", "DecA", "IncB", "DecB" };
 	const char ArduinoCommand[DEF_ARDUINO_COMMAND_NUMBER][2] = { "T", "T", "t", "R", "r", "U", "D", "F", "f", "P", "V", "V", "A", "a", "B", "b", };
 	
-	bool OpenCom(void);
+	void ComportSet(char *comport);
 	bool PC2Arduino(char *command);
+	void ComportInit(void);
 }

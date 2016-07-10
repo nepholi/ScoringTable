@@ -9,6 +9,9 @@
 #include <JuceHeader.h>
 #include <Common/PC2Arduino/Serial.h>
 #include <Common/PC2Arduino/PC2Arduino.h>
+
+
+
 namespace waa {
 
 	enum ArduinoCommand : int {
@@ -38,13 +41,13 @@ public:
 	ArduinoManager();
 	~ArduinoManager();
 
-	bool SetupArduinoEnvironment();
+	bool SetupArduinoEnvironment(bool ArduinoSwtich);
 	bool PingAuduino();
 
 	bool StartArduino();
 	bool EndArduino();
 
-	bool SendCommandToArduino( int command);
+	static bool SendCommandToArduino(int command);
 
 private:
 

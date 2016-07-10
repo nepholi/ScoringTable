@@ -12,7 +12,7 @@ using namespace std;
 
 #include "Serial.h"
 
-Serial::Serial(tstring &commPortName, int bitRate)
+void Serial::SerialInit(tstring &commPortName, int bitRate)
 {
 	commHandle = CreateFile(commPortName.c_str(), GENERIC_READ|GENERIC_WRITE, 0,NULL, OPEN_EXISTING, 
 		0, NULL);

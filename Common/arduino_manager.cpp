@@ -17,13 +17,16 @@ ArduinoManager::~ArduinoManager()
 {
 }
 
-bool ArduinoManager::SetupArduinoEnvironment()
+bool ArduinoManager::SetupArduinoEnvironment(bool ArduinoSwtich)
 {
+	//waa::OpenCom(ArduinoSwtich);
 	return true;
 }
 
 bool ArduinoManager::PingAuduino()
 {
+	Serial *ComPort;
+	
 	return true;
 }
 
@@ -37,7 +40,7 @@ bool ArduinoManager::EndArduino()
 	return true;
 }
 
-bool SendCommandToArduino( int command)
+bool ArduinoManager::SendCommandToArduino(int command)
 {
 	
 	char *temp = strdup(PCCommand[command]);

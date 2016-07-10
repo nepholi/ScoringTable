@@ -27,7 +27,8 @@ private:
 	HANDLE commHandle;
 
 public:
-	Serial(tstring &commPortName, int bitRate = 115200);
+
+	void SerialInit(tstring &commPortName, int bitRate = 115200);
 
 	virtual ~Serial();
 
