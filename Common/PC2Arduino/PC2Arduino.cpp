@@ -14,12 +14,15 @@ namespace waa {
 	//tstring commPortName((_TCHAR*)"COM9");
 	tstring commPortName;// ((_TCHAR*)"COM4");
 	Serial serial;
+
 	void ComportSet(char *comport){
 		commPortName=((_TCHAR*)comport);
 	}
+
 	void ComportInit(void){
 		serial.SerialInit(commPortName);
 	}
+
 	bool waa::PC2Arduino(char *command){
 		int i = 0;
 		char buffer = '\0';

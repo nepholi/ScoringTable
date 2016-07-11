@@ -41,7 +41,7 @@ public:
 	ArduinoManager();
 	~ArduinoManager();
 
-	bool SetupArduinoEnvironment(bool ArduinoSwtich);
+	bool SetupArduinoEnvironment();
 	bool PingAuduino();
 
 	bool StartArduino();

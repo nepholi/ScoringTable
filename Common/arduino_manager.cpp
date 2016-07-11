@@ -17,7 +17,7 @@ ArduinoManager::~ArduinoManager()
 {
 }
 
-bool ArduinoManager::SetupArduinoEnvironment(bool ArduinoSwtich)
+bool ArduinoManager::SetupArduinoEnvironment()
 {
 	//waa::OpenCom(ArduinoSwtich);
 	return true;

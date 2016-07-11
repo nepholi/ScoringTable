@@ -19,7 +19,7 @@ using namespace waa;
 #define WindowButtonMinimum     1
 #define WindowButtonMaxmum      2
 #define WindowButtonClose       4
-#define ArduinoSwitch       1
+#define ArduinoSwitch       0
 
 BasketballApplication::BasketballApplication()
 	: cc_(nullptr)
@@ -45,7 +45,7 @@ void BasketballApplication::initialise(const String& commandLine)
 void BasketballApplication::shutdown()
 {
 	// Add your application's shutdown code here..
-
+	waa::ReportOutput();
 	mainWindow = nullptr; // (deletes our window)
 }
 
@@ -138,7 +138,7 @@ void BasketballApplication::RegisterGuestScoreIncreaseButton(MainContentComponen
 		{
 			mcc.SetGuestScore(guest_score);
 		});
-		waa::time_record(DEF_TEAM_HOME, guest_score, cc_->GetClockValue());
+		waa::time_record(DEF_TEAM_GUEST, guest_score, cc_->GetClockValue());
 		return true;
 	});
 }
@@ -199,7 +199,7 @@ bool BasketballApplication::InitializeArduinoManager()
 	jassert(adm_ == nullptr);
 
 	adm_ = std::make_unique<ArduinoManager>();
-	if (!adm_->SetupArduinoEnvironment(ArduinoSwitch))
+	if (!adm_->SetupArduinoEnvironment())
 		return false;
 	
 	if (!adm_->PingAuduino())
